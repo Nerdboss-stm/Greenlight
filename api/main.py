@@ -17,7 +17,8 @@ from fastapi.responses import JSONResponse
 from sse_starlette.sse import EventSourceResponse
 
 from adapters import doc_adapter, fhir_adapter
-from agent import pipeline, retrieve
+from agent import author, pipeline, retrieve
+from evals.run_evals import run_evals
 
 from .models import (
     AuthorRequest,
@@ -167,18 +168,31 @@ async def run_case(body: CaseRequest):
 
 
 @app.post("/policies/{procedure}/author", response_model=list[GoldCase])
-async def author_gold(procedure: str, body: AuthorRequest) -> list[GoldCase]:
-    """Author candidate gold cases (status pending_human)."""
-    raise _todo("POST /policies/{procedure}/author")
+def author_gold(procedure: str, body: AuthorRequest) -> list[GoldCase]:
+    """Author candidate gold cases (status pending_human); stores accepted ones append-only."""
+    try:
+        accepted, _rejected = author.author_and_store(procedure, body.targets)
+        return accepted
+    except Exception as exc:
+        raise ApiException("author_error", f"authoring failed: {exc}", 502)
 
 
 @app.post("/basket", response_model=BasketResponse)
-async def submit_basket(body: BasketRequest) -> BasketResponse:
+def submit_basket(body: BasketRequest) -> BasketResponse:
     """Record human accept/reject decisions; return the verified basket size."""
-    raise _todo("POST /basket")
+    try:
+        size = author.set_status(body.procedure, body.decisions)
+        return BasketResponse(basket_size=size)
+    except Exception as exc:
+        raise ApiException("basket_error", f"basket update failed: {exc}", 500)
 
 
 @app.post("/evals/run", response_model=EvalResult)
-async def run_evals(body: EvalRunRequest) -> EvalResult:
+def run_evals_endpoint(body: EvalRunRequest) -> EvalResult:
     """Run the eval harness for a procedure/mode."""
-    raise _todo("POST /evals/run")
+    try:
+        return run_evals(body.procedure, body.mode)
+    except ValueError as exc:
+        raise ApiException("no_cases", str(exc), 400)
+    except Exception as exc:
+        raise ApiException("eval_error", f"eval failed: {exc}", 500)

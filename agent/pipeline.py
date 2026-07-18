@@ -21,6 +21,9 @@ _CASE_AGENT = os.getenv("GREENLIGHT_CASE_AGENT", "1") != "0"
 
 
 def _parse_patient(pf: dict[str, Any]) -> PatientContext:
+    # Already a PatientContext (e.g. a stored gold case) — validate directly.
+    if "demographics" in pf and "source_spans" in pf and "resourceType" not in pf:
+        return PatientContext.model_validate(pf)
     modality = pf.get("modality") or pf.get("_modality")
     has_structured = "patient_context" in pf or "encounter_fhir" in pf or pf.get("resourceType") == "Bundle"
     if modality == "transcript" or (not has_structured and isinstance(pf.get("transcript"), str)):
@@ -28,7 +31,10 @@ def _parse_patient(pf: dict[str, Any]) -> PatientContext:
     return fhir_adapter.parse_obj(pf)
 
 
-def run_case(patient_file: dict[str, Any], procedure: str, mode: str = "baseline") -> Determination:
+def run_case(patient_file: dict[str, Any], procedure: str, mode: str = "baseline",
+             *, use_agent: bool | None = None) -> Determination:
+    if use_agent is None:
+        use_agent = _CASE_AGENT
     t0 = time.monotonic()
     tracer = Tracer()
 
@@ -51,7 +57,7 @@ def run_case(patient_file: dict[str, Any], procedure: str, mode: str = "baseline
                     {"id": c.id, "type": c.type, "logic": c.logic, "clause_ref": c.clause_ref})
 
     # 3) review
-    results = reviewer.review(patient, policy, tracer, use_agent=_CASE_AGENT)
+    results = reviewer.review(patient, policy, tracer, use_agent=use_agent)
 
     # 4) argue (adversarial mode only)
     transcript = None

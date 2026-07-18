@@ -1,0 +1,935 @@
+[
+  {
+    "case_id": "gold-therapeutic_footwear-amputation-da3372ac",
+    "procedure": "therapeutic_footwear",
+    "patient": {
+      "demographics": {
+        "age": 63,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.2,
+          "unit": "%",
+          "date": "2024-02-15"
+        },
+        {
+          "code": "2345-7",
+          "display": "Glucose",
+          "value": 176.0,
+          "unit": "mg/dL",
+          "date": "2024-02-15"
+        }
+      ],
+      "meds": [
+        {
+          "name": "Metformin",
+          "rxnorm": "860975"
+        },
+        {
+          "name": "Lisinopril",
+          "rxnorm": "314076"
+        },
+        {
+          "name": "Atorvastatin",
+          "rxnorm": "617311"
+        },
+        {
+          "name": "Omeprazole",
+          "rxnorm": "198211"
+        }
+      ],
+      "prior_treatments": [
+        "Transmetatarsal amputation of right foot",
+        "Wound care follow-up"
+      ],
+      "symptoms": [
+        "altered gait",
+        "difficulty fitting standard shoes"
+      ],
+      "foot_conditions": [
+        {
+          "icd10": "Z89.431",
+          "display": "Acquired absence of right foot (partial foot amputation)"
+        }
+      ],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-03-01",
+          "reason": "Diabetic foot evaluation for therapeutic footwear"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "footwear_diabetes_mellitus": "met",
+      "footwear_qualifying_foot_condition": "met"
+    },
+    "reason": "Diabetes + amputation \u2192 qualifying condition met \u2192 APPROVE.",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-therapeutic_footwear-ulcer_history-067c4240",
+    "procedure": "therapeutic_footwear",
+    "patient": {
+      "demographics": {
+        "age": 63,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.1,
+          "unit": "%",
+          "date": "2024-04-15"
+        },
+        {
+          "code": "2345-7",
+          "display": "Glucose",
+          "value": 162.0,
+          "unit": "mg/dL",
+          "date": "2024-04-15"
+        }
+      ],
+      "meds": [
+        {
+          "name": "Metformin",
+          "rxnorm": "860975"
+        },
+        {
+          "name": "Lisinopril",
+          "rxnorm": "314076"
+        },
+        {
+          "name": "Atorvastatin",
+          "rxnorm": "617311"
+        },
+        {
+          "name": "Omeprazole",
+          "rxnorm": "198211"
+        }
+      ],
+      "prior_treatments": [
+        "Wound care for prior foot ulcer",
+        "Custom insoles"
+      ],
+      "symptoms": [
+        "healed ulcer site on plantar foot",
+        "occasional foot numbness"
+      ],
+      "foot_conditions": [
+        {
+          "icd10": "L97.429",
+          "display": "Non-pressure chronic ulcer of left heel and midfoot with unspecified severity (history of diabetic foot ulcer)"
+        },
+        {
+          "icd10": "E11.621",
+          "display": "Type 2 diabetes mellitus with foot ulcer"
+        }
+      ],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-04-15",
+          "reason": "Diabetic foot follow-up, prior ulcer history evaluation"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "footwear_diabetes_mellitus": "met",
+      "footwear_qualifying_foot_condition": "met"
+    },
+    "reason": "Diabetes + ulcer history \u2192 qualifying condition met \u2192 APPROVE.",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-therapeutic_footwear-pre_ulcerative_callus-a011eb30",
+    "procedure": "therapeutic_footwear",
+    "patient": {
+      "demographics": {
+        "age": 63,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.1,
+          "unit": "%",
+          "date": "2024-05-10"
+        },
+        {
+          "code": "2345-7",
+          "display": "Glucose",
+          "value": 156.0,
+          "unit": "mg/dL",
+          "date": "2024-05-10"
+        }
+      ],
+      "meds": [
+        {
+          "name": "Metformin",
+          "rxnorm": "860975"
+        },
+        {
+          "name": "Lisinopril",
+          "rxnorm": "314076"
+        },
+        {
+          "name": "Atorvastatin",
+          "rxnorm": "617312"
+        },
+        {
+          "name": "Omeprazole",
+          "rxnorm": "402014"
+        }
+      ],
+      "prior_treatments": [
+        "Diabetic foot self-care education",
+        "Regular podiatric callus debridement"
+      ],
+      "symptoms": [
+        "Thickened skin over plantar forefoot",
+        "Localized pressure area on right foot"
+      ],
+      "foot_conditions": [
+        {
+          "icd10": "L84",
+          "display": "Pre-ulcerative callus of the right plantar forefoot"
+        }
+      ],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-05-12",
+          "reason": "Podiatry evaluation of pre-ulcerative callus in diabetic patient"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "footwear_diabetes_mellitus": "met",
+      "footwear_qualifying_foot_condition": "met"
+    },
+    "reason": "Diabetes + pre ulcerative callus \u2192 qualifying condition met \u2192 APPROVE.",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-therapeutic_footwear-neuropathy_with_callus-d56d65d9",
+    "procedure": "therapeutic_footwear",
+    "patient": {
+      "demographics": {
+        "age": 63,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.42",
+          "display": "Type 2 diabetes mellitus with diabetic polyneuropathy"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.2,
+          "unit": "%",
+          "date": "2024-02-15"
+        },
+        {
+          "code": "2345-7",
+          "display": "Glucose",
+          "value": 172.0,
+          "unit": "mg/dL",
+          "date": "2024-02-15"
+        }
+      ],
+      "meds": [
+        {
+          "name": "Metformin",
+          "rxnorm": "860975"
+        },
+        {
+          "name": "Lisinopril",
+          "rxnorm": "314076"
+        },
+        {
+          "name": "Atorvastatin",
+          "rxnorm": "617312"
+        },
+        {
+          "name": "Omeprazole",
+          "rxnorm": "198211"
+        }
+      ],
+      "prior_treatments": [
+        "Routine podiatric callus debridement",
+        "Diabetic foot self-care education"
+      ],
+      "symptoms": [
+        "Numbness and tingling in both feet",
+        "Reduced sensation to monofilament testing",
+        "Thickened callus over plantar surface"
+      ],
+      "foot_conditions": [
+        {
+          "icd10": "E11.42",
+          "display": "Peripheral neuropathy due to diabetes mellitus"
+        },
+        {
+          "icd10": "L84",
+          "display": "Callus formation on plantar surface of foot"
+        }
+      ],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-02-15",
+          "reason": "Diabetic foot evaluation for therapeutic footwear"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "footwear_diabetes_mellitus": "met",
+      "footwear_qualifying_foot_condition": "met"
+    },
+    "reason": "Diabetes + neuropathy with callus \u2192 qualifying condition met \u2192 APPROVE.",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-therapeutic_footwear-foot_deformity-676e081d",
+    "procedure": "therapeutic_footwear",
+    "patient": {
+      "demographics": {
+        "age": 63,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.1,
+          "unit": "%",
+          "date": "2024-05-10"
+        },
+        {
+          "code": "2345-7",
+          "display": "Glucose",
+          "value": 162.0,
+          "unit": "mg/dL",
+          "date": "2024-05-10"
+        }
+      ],
+      "meds": [
+        {
+          "name": "Metformin",
+          "rxnorm": "860975"
+        },
+        {
+          "name": "Lisinopril",
+          "rxnorm": "314076"
+        },
+        {
+          "name": "Atorvastatin",
+          "rxnorm": "617311"
+        },
+        {
+          "name": "Omeprazole",
+          "rxnorm": "198211"
+        }
+      ],
+      "prior_treatments": [
+        "Custom orthotic inserts",
+        "Routine podiatric follow-up"
+      ],
+      "symptoms": [
+        "Foot pressure points",
+        "Difficulty fitting standard shoes"
+      ],
+      "foot_conditions": [
+        {
+          "icd10": "M20.40",
+          "display": "Hammer toe(s) (acquired), unspecified foot"
+        },
+        {
+          "icd10": "E11.610",
+          "display": "Type 2 diabetes mellitus with diabetic neuropathic arthropathy (Charcot foot)"
+        }
+      ],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-05-10",
+          "reason": "Diabetic foot evaluation and therapeutic footwear request"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "footwear_diabetes_mellitus": "met",
+      "footwear_qualifying_foot_condition": "met"
+    },
+    "reason": "Diabetes + foot deformity \u2192 qualifying condition met \u2192 APPROVE.",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-therapeutic_footwear-poor_circulation-3785413e",
+    "procedure": "therapeutic_footwear",
+    "patient": {
+      "demographics": {
+        "age": 67,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.1,
+          "unit": "%",
+          "date": "2024-05-14"
+        },
+        {
+          "code": "2345-7",
+          "display": "Glucose",
+          "value": 156.0,
+          "unit": "mg/dL",
+          "date": "2024-05-14"
+        }
+      ],
+      "meds": [
+        {
+          "name": "Metformin",
+          "rxnorm": "860975"
+        },
+        {
+          "name": "Lisinopril",
+          "rxnorm": "314076"
+        },
+        {
+          "name": "Atorvastatin",
+          "rxnorm": "617311"
+        },
+        {
+          "name": "Omeprazole",
+          "rxnorm": "198211"
+        }
+      ],
+      "prior_treatments": [
+        "Diabetic foot care education",
+        "Ankle-brachial index testing"
+      ],
+      "symptoms": [
+        "Cold feet",
+        "Intermittent claudication",
+        "Diminished pedal pulses"
+      ],
+      "foot_conditions": [
+        {
+          "icd10": "I70.92",
+          "display": "Peripheral arterial disease with poor circulation of the foot"
+        },
+        {
+          "icd10": "I73.9",
+          "display": "Peripheral vascular disease, unspecified (poor circulation)"
+        }
+      ],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-05-14",
+          "reason": "Diabetes follow-up with evaluation of foot circulation"
+        },
+        {
+          "class": "AMB",
+          "date": "2024-06-02",
+          "reason": "Vascular assessment for peripheral arterial disease of the foot"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "footwear_diabetes_mellitus": "met",
+      "footwear_qualifying_foot_condition": "met"
+    },
+    "reason": "Diabetes + poor circulation \u2192 qualifying condition met \u2192 APPROVE.",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-therapeutic_footwear-no_qualifying_condition-09cbc220",
+    "procedure": "therapeutic_footwear",
+    "patient": {
+      "demographics": {
+        "age": 58,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 7.8,
+          "unit": "%",
+          "date": "2024-09-15"
+        },
+        {
+          "code": "2345-7",
+          "display": "Glucose",
+          "value": 152.0,
+          "unit": "mg/dL",
+          "date": "2024-09-15"
+        }
+      ],
+      "meds": [
+        {
+          "name": "Metformin",
+          "rxnorm": "860975"
+        },
+        {
+          "name": "Lisinopril",
+          "rxnorm": "314076"
+        },
+        {
+          "name": "Atorvastatin",
+          "rxnorm": "617311"
+        },
+        {
+          "name": "Omeprazole",
+          "rxnorm": "402014"
+        }
+      ],
+      "prior_treatments": [
+        "Dietary counseling",
+        "Metformin therapy"
+      ],
+      "symptoms": [
+        "Occasional fatigue",
+        "Increased thirst"
+      ],
+      "foot_conditions": [],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-09-15",
+          "reason": "Routine diabetes follow-up"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "footwear_diabetes_mellitus": "met",
+      "footwear_qualifying_foot_condition": "unknown"
+    },
+    "reason": "Diabetes but no documented qualifying foot condition \u2192 INSUFFICIENT (fail-closed).",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-cgm-insulin_generic-bd0248ea",
+    "procedure": "cgm",
+    "patient": {
+      "demographics": {
+        "age": 54,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.9,
+          "unit": "%",
+          "date": "2024-05-10"
+        },
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 9.3,
+          "unit": "%",
+          "date": "2024-02-08"
+        },
+        {
+          "code": "2339-0",
+          "display": "Glucose [Mass/volume] in Blood",
+          "value": 212.0,
+          "unit": "mg/dL",
+          "date": "2024-05-10"
+        }
+      ],
+      "meds": [
+        {
+          "name": "insulin glargine",
+          "rxnorm": "274783"
+        },
+        {
+          "name": "insulin lispro",
+          "rxnorm": "86009"
+        },
+        {
+          "name": "lisinopril",
+          "rxnorm": "29046"
+        },
+        {
+          "name": "atorvastatin",
+          "rxnorm": "83367"
+        },
+        {
+          "name": "omeprazole",
+          "rxnorm": "7646"
+        }
+      ],
+      "prior_treatments": [
+        "Metformin monotherapy with inadequate glycemic control",
+        "Basal-bolus insulin regimen initiated",
+        "Frequent insulin dose titration due to glucose variability"
+      ],
+      "symptoms": [
+        "recurrent hyperglycemia",
+        "episodes of nocturnal hypoglycemia",
+        "difficulty stabilizing blood glucose despite adherence"
+      ],
+      "foot_conditions": [],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-05-10",
+          "reason": "Endocrinology follow-up for insulin management and glucose variability"
+        },
+        {
+          "class": "AMB",
+          "date": "2024-02-08",
+          "reason": "Diabetes management visit with insulin regimen adjustment"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "cgm_diabetes_mellitus": "met",
+      "cgm_insulin_treated": "met",
+      "cgm_frequent_adjustment": "met"
+    },
+    "reason": "Diabetes + insulin (named) \u2192 APPROVE.",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-cgm-insulin_brand-59c68eaf",
+    "procedure": "cgm",
+    "patient": {
+      "demographics": {
+        "age": 54,
+        "sex": "male"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.65",
+          "display": "Type 2 diabetes mellitus with hyperglycemia"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastroesophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 9.2,
+          "unit": "%",
+          "date": "2024-05-10"
+        },
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.7,
+          "unit": "%",
+          "date": "2024-02-08"
+        },
+        {
+          "code": "2339-0",
+          "display": "Glucose (fasting)",
+          "value": 198.0,
+          "unit": "mg/dL",
+          "date": "2024-05-10"
+        },
+        {
+          "code": "2339-0",
+          "display": "Glucose (fasting)",
+          "value": 243.0,
+          "unit": "mg/dL",
+          "date": "2024-05-25"
+        }
+      ],
+      "meds": [
+        {
+          "name": "Lantus",
+          "rxnorm": "285018"
+        },
+        {
+          "name": "Humalog",
+          "rxnorm": "242120"
+        },
+        {
+          "name": "Lisinopril",
+          "rxnorm": "314076"
+        },
+        {
+          "name": "Atorvastatin",
+          "rxnorm": "617310"
+        },
+        {
+          "name": "Omeprazole",
+          "rxnorm": "198051"
+        }
+      ],
+      "prior_treatments": [
+        "Metformin monotherapy (discontinued due to inadequate glycemic control)",
+        "Basal-bolus dosing with frequent titration based on home glucose logs",
+        "Documented multiple daily dose adjustments over the past 3 months"
+      ],
+      "symptoms": [
+        "recurrent hyperglycemia requiring dose changes",
+        "episodes of nocturnal hypoglycemia",
+        "polyuria"
+      ],
+      "foot_conditions": [],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-05-10",
+          "reason": "Diabetes management, glycemic control review"
+        },
+        {
+          "class": "AMB",
+          "date": "2024-05-25",
+          "reason": "Follow-up for basal-bolus dose adjustment"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "cgm_diabetes_mellitus": "met",
+      "cgm_insulin_treated": "met",
+      "cgm_frequent_adjustment": "met"
+    },
+    "reason": "Diabetes + BRAND-named insulin \u2192 APPROVE, but only the adversarial layer recovers it.",
+    "status": "verified"
+  },
+  {
+    "case_id": "gold-cgm-no_meds-140f7d43",
+    "procedure": "cgm",
+    "patient": {
+      "demographics": {
+        "age": 54,
+        "sex": "female"
+      },
+      "diagnoses": [
+        {
+          "icd10": "E11.9",
+          "display": "Type 2 diabetes mellitus without complications"
+        },
+        {
+          "icd10": "I10",
+          "display": "Essential (primary) hypertension"
+        },
+        {
+          "icd10": "E78.5",
+          "display": "Hyperlipidemia, unspecified"
+        },
+        {
+          "icd10": "K21.9",
+          "display": "Gastro-esophageal reflux disease without esophagitis"
+        }
+      ],
+      "labs": [
+        {
+          "code": "4548-4",
+          "display": "Hemoglobin A1c",
+          "value": 8.9,
+          "unit": "%",
+          "date": "2024-05-14"
+        },
+        {
+          "code": "2339-0",
+          "display": "Glucose (fasting)",
+          "value": 172.0,
+          "unit": "mg/dL",
+          "date": "2024-05-14"
+        }
+      ],
+      "meds": [],
+      "prior_treatments": [
+        "Dietary counseling",
+        "Lifestyle modification education"
+      ],
+      "symptoms": [
+        "polyuria",
+        "polydipsia",
+        "intermittent fatigue"
+      ],
+      "foot_conditions": [],
+      "encounters": [
+        {
+          "class": "AMB",
+          "date": "2024-05-14",
+          "reason": "Diabetes follow-up, glucose management discussion"
+        }
+      ],
+      "source_spans": {}
+    },
+    "expected_criteria": {
+      "cgm_diabetes_mellitus": "met",
+      "cgm_insulin_treated": "unknown",
+      "cgm_frequent_adjustment": "met"
+    },
+    "reason": "Diabetes, medications undocumented \u2192 insulin status unknown \u2192 INSUFFICIENT.",
+    "status": "verified"
+  }
+]
