@@ -1,0 +1,8 @@
+claude-agent-sdk
+anthropic
+pydantic
+fastapi
+uvicorn
+sse-starlette
+pypdf
+requests

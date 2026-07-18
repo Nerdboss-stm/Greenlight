@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node / Vite
+node_modules/
+ui/dist/
+
+# Secrets
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+*.log
+
+# claude-flow tool state
+.claude-flow/
+.swarm/
+ruvector.db
+
+# claude-flow / RuFlo tooling
+.claude/
+.mcp.json
