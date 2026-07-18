@@ -1,0 +1,93 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "id": "greenlight-demo-footwear-ulcer",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "gl-foot-ulcer-0001",
+        "name": [{ "use": "official", "family": "Alvarez", "given": ["Rosa", "M"], "prefix": ["Mrs."] }],
+        "gender": "female",
+        "birthDate": "1953-06-21"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "gl-foot-ulcer-enc-1",
+        "status": "finished",
+        "class": { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "AMB", "display": "ambulatory" },
+        "type": [
+          {
+            "coding": [{ "system": "http://snomed.info/sct", "code": "185349003", "display": "Encounter for check up (procedure)" }],
+            "text": "Podiatry visit — diabetic foot ulcer follow-up; therapeutic footwear evaluation"
+          }
+        ],
+        "period": { "start": "2026-04-09T10:00:00-05:00", "end": "2026-04-09T10:30:00-05:00" }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "gl-foot-ulcer-cond-dm",
+        "clinicalStatus": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" }] },
+        "verificationStatus": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" }] },
+        "category": [
+          { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/condition-category", "code": "encounter-diagnosis", "display": "Encounter Diagnosis" }] }
+        ],
+        "code": {
+          "coding": [
+            { "system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "E11.9", "display": "Type 2 diabetes mellitus without complications" },
+            { "system": "http://snomed.info/sct", "code": "44054006", "display": "Type 2 diabetes mellitus (disorder)" }
+          ],
+          "text": "Type 2 diabetes mellitus"
+        },
+        "onsetDateTime": "2016-03-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "gl-foot-ulcer-cond-ulcer",
+        "clinicalStatus": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/condition-clinical", "code": "active" }] },
+        "verificationStatus": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status", "code": "confirmed" }] },
+        "category": [
+          { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/condition-category", "code": "encounter-diagnosis", "display": "Encounter Diagnosis" }] }
+        ],
+        "code": {
+          "coding": [
+            { "system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "L97.529", "display": "Non-pressure chronic ulcer of other part of left foot" },
+            { "system": "http://snomed.info/sct", "code": "371087003", "display": "Diabetic foot ulcer (disorder)" }
+          ],
+          "text": "Diabetic foot ulcer of left foot"
+        },
+        "onsetDateTime": "2026-02-20"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "gl-foot-ulcer-obs-a1c",
+        "status": "final",
+        "category": [{ "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory" }] }],
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "4548-4", "display": "Hemoglobin A1c/Hemoglobin.total in Blood" }], "text": "Hemoglobin A1c" },
+        "valueQuantity": { "value": 8.9, "unit": "%", "system": "http://unitsofmeasure.org", "code": "%" },
+        "effectiveDateTime": "2026-04-08T08:15:00-05:00"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "gl-foot-ulcer-med-metformin",
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "860975", "display": "Metformin hydrochloride 1000 MG Oral Tablet" }],
+          "text": "metformin 1000 mg"
+        },
+        "authoredOn": "2024-11-03T09:00:00-05:00"
+      }
+    }
+  ]
+}
