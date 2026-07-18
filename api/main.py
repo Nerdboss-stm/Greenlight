@@ -11,11 +11,15 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from adapters import doc_adapter, fhir_adapter
+from agent import retrieve
+
 from .models import (
     AuthorRequest,
     BasketRequest,
     BasketResponse,
     CaseRequest,
+    DecomposePolicyRequest,
     Determination,
     EvalResult,
     EvalRunRequest,
@@ -67,21 +71,61 @@ def _todo(endpoint: str) -> "ApiException":
 
 
 @app.post("/summarize", response_model=PatientContext)
-async def summarize(body: SummarizeRequest) -> PatientContext:
-    """Parse a patient record into a PatientContext (deterministic, no LLM)."""
-    raise _todo("POST /summarize")
+def summarize(body: SummarizeRequest) -> PatientContext:
+    """Parse a patient record into a PatientContext.
+
+    Default is the deterministic FHIR path (Bundle or Abridge record). The
+    transcript modality (LLM) is used only when explicitly requested via
+    ``modality: "transcript"`` or when the payload is transcript-only.
+    """
+    pf = body.patient_file
+    modality = pf.get("modality") or pf.get("_modality")
+    has_structured = "patient_context" in pf or "encounter_fhir" in pf or pf.get("resourceType") == "Bundle"
+
+    try:
+        if modality == "transcript" or (not has_structured and isinstance(pf.get("transcript"), str)):
+            transcript = pf.get("transcript")
+            if not isinstance(transcript, str) or not transcript.strip():
+                raise ApiException("bad_request", "transcript modality requires a non-empty 'transcript'", 400)
+            return doc_adapter.parse_transcript(transcript)
+        return fhir_adapter.parse_obj(pf)
+    except ApiException:
+        raise
+    except Exception as exc:  # parsing/validation failure → one envelope
+        raise ApiException("parse_error", f"could not parse patient_file: {exc}", 422)
 
 
 @app.get("/policies", response_model=list[Policy])
-async def list_policies() -> list[Policy]:
+def list_policies() -> list[Policy]:
     """Return the pinned policy set."""
-    raise _todo("GET /policies")
+    try:
+        return retrieve.list_policies()
+    except Exception as exc:
+        raise ApiException("policy_error", f"could not list policies: {exc}", 500)
 
 
 @app.post("/policies/retrieve", response_model=Policy)
-async def retrieve_policy(body: RetrievePolicyRequest) -> Policy:
+def retrieve_policy(body: RetrievePolicyRequest) -> Policy:
     """Run the connector → search → fetch → cache fallback chain, then pin."""
-    raise _todo("POST /policies/retrieve")
+    try:
+        return retrieve.retrieve_policy(body.procedure)
+    except KeyError as exc:
+        raise ApiException("not_found", f"no policy for procedure {body.procedure!r}", 404) from exc
+    except Exception as exc:
+        raise ApiException("policy_error", f"retrieval failed: {exc}", 500)
+
+
+@app.post("/policies/decompose", response_model=Policy)
+def decompose_policy(body: DecomposePolicyRequest) -> Policy:
+    """Decompose free-text policy language into a Policy (one LLM call → validate)."""
+    if not body.text or not body.text.strip():
+        raise ApiException("bad_request", "policy text is required", 400)
+    try:
+        return retrieve.decompose_text(body.text, body.procedure)
+    except ApiException:
+        raise
+    except Exception as exc:
+        raise ApiException("decompose_error", f"could not decompose policy: {exc}", 502)
 
 
 @app.post("/case")

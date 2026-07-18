@@ -216,6 +216,11 @@ export interface RetrievePolicyRequest {
   procedure: string;
 }
 
+export interface DecomposePolicyRequest {
+  text: string;
+  procedure?: string;
+}
+
 export interface CaseRequest {
   patient_file: Record<string, unknown>;
   procedure: string;

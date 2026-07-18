@@ -174,6 +174,7 @@ Every non-2xx response uses exactly one shape:
 | `POST` | `/summarize` | `{ patient_file }` | `PatientContext` |
 | `GET` | `/policies` | — | `Policy[]` (pinned) |
 | `POST` | `/policies/retrieve` | `{ procedure }` | `Policy` (runs fallback chain, pins) |
+| `POST` | `/policies/decompose` | `{ text, procedure? }` | `Policy` (decompose free-text policy: one LLM call → validate → pin) |
 | `POST` | `/case` | `{ patient_file, procedure, mode? }` | `Determination` (always includes `trace[]`) |
 | `POST` | `/case` (stream) | `{ patient_file, procedure, mode?, stream: true }` | **SSE** — one `TraceEvent` per `data:` frame; final `done` event carries the full `Determination` |
 | `POST` | `/policies/{procedure}/author` | `{ targets }` | `GoldCase[]` (`status: pending_human`) |

@@ -1,0 +1,49 @@
+{
+  "procedure": "cgm",
+  "version_hash": "048f4b2fb8bccf1e",
+  "source": "local-cache (canonical · Medicare Therapeutic CGM — LCD L33822)",
+  "criteria": [
+    {
+      "id": "cgm_diabetes_mellitus",
+      "text": "The beneficiary has diabetes mellitus.",
+      "quote": "the beneficiary has diabetes mellitus",
+      "clause_ref": "LCD L33822",
+      "type": "hard",
+      "logic": "all_of",
+      "needs": [
+        "diagnoses"
+      ],
+      "threshold": null,
+      "context_conditions": [],
+      "confidence": 0.95
+    },
+    {
+      "id": "cgm_insulin_treated",
+      "text": "The beneficiary is treated with insulin.",
+      "quote": "the beneficiary is treated with insulin",
+      "clause_ref": "LCD L33822",
+      "type": "hard",
+      "logic": "all_of",
+      "needs": [
+        "meds"
+      ],
+      "threshold": null,
+      "context_conditions": [],
+      "confidence": 0.95
+    },
+    {
+      "id": "cgm_frequent_adjustment",
+      "text": "The treatment regimen requires frequent adjustment based on glucose testing results.",
+      "quote": "requires frequent adjustment on the basis of glucose testing results",
+      "clause_ref": "LCD L33822",
+      "type": "soft",
+      "logic": "all_of",
+      "needs": [
+        "labs"
+      ],
+      "threshold": null,
+      "context_conditions": [],
+      "confidence": 0.7
+    }
+  ]
+}

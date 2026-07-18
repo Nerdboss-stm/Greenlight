@@ -235,6 +235,11 @@ class RetrievePolicyRequest(BaseModel):
     procedure: str
 
 
+class DecomposePolicyRequest(BaseModel):
+    text: str
+    procedure: Optional[str] = None
+
+
 class CaseRequest(BaseModel):
     patient_file: dict[str, Any]
     procedure: str

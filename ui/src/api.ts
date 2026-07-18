@@ -12,6 +12,7 @@ import type {
   BasketRequest,
   BasketResponse,
   CaseRequest,
+  DecomposePolicyRequest,
   Determination,
   EvalResult,
   EvalRunRequest,
@@ -88,6 +89,10 @@ export function getPolicies(): Promise<Policy[]> {
 
 export function retrievePolicy(procedure: string): Promise<Policy> {
   return post<Policy>("/policies/retrieve", { procedure } satisfies RetrievePolicyRequest);
+}
+
+export function decomposePolicy(text: string, procedure?: string): Promise<Policy> {
+  return post<Policy>("/policies/decompose", { text, procedure } satisfies DecomposePolicyRequest);
 }
 
 export function runCase(req: CaseRequest): Promise<Determination> {

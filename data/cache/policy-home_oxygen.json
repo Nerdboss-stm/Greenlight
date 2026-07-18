@@ -1,0 +1,62 @@
+{
+  "procedure": "home_oxygen",
+  "version_hash": "1040ba941fdbd601",
+  "source": "local-cache (canonical · CMS NCD 240.2 — Home Use of Oxygen)",
+  "criteria": [
+    {
+      "id": "oxygen_qualifying_hypoxemia",
+      "text": "Qualifying hypoxemia: arterial O2 saturation at or below 88% (or PaO2 ≤ 55 mmHg), measured at rest on room air.",
+      "quote": "the arterial oxygen saturation is at or below 88 percent, taken at rest, breathing room air",
+      "clause_ref": "NCD 240.2 · Group I",
+      "type": "hard",
+      "logic": "any_of",
+      "needs": [
+        "labs"
+      ],
+      "threshold": {
+        "op": "<=",
+        "value": 88.0,
+        "unit": "%"
+      },
+      "context_conditions": [
+        "at_rest",
+        "room_air",
+        "chronic_stable"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "id": "oxygen_chronic_stable_state",
+      "text": "The qualifying measurement was obtained during a chronic stable state — not during an acute illness or exacerbation (e.g. not an inpatient COVID/pneumonia admission).",
+      "quote": "not during a period of acute illness or an exacerbation of the underlying disease",
+      "clause_ref": "NCD 240.2 · Qualifying blood gas study",
+      "type": "hard",
+      "logic": "all_of",
+      "needs": [
+        "encounters",
+        "labs"
+      ],
+      "threshold": null,
+      "context_conditions": [
+        "chronic_stable",
+        "not_acute"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "id": "oxygen_therapeutic_regimen",
+      "text": "An appropriate therapeutic regimen has been determined before initiating home oxygen.",
+      "quote": "after an appropriate therapeutic regimen has been determined",
+      "clause_ref": "NCD 240.2",
+      "type": "soft",
+      "logic": "all_of",
+      "needs": [
+        "meds",
+        "prior_treatments"
+      ],
+      "threshold": null,
+      "context_conditions": [],
+      "confidence": 0.6
+    }
+  ]
+}

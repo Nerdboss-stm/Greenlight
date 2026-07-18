@@ -1,0 +1,42 @@
+{
+  "procedure": "therapeutic_footwear",
+  "version_hash": "4c96f877728212b7",
+  "source": "local-cache (canonical · Medicare Therapeutic Shoes for Persons with Diabetes — LCD L33369)",
+  "criteria": [
+    {
+      "id": "footwear_diabetes_mellitus",
+      "text": "The patient has diabetes mellitus and is under a comprehensive plan of care for diabetes.",
+      "quote": "the patient has diabetes mellitus and is under a comprehensive plan of care for diabetes",
+      "clause_ref": "SSA §1861(s)(12) · LCD L33369",
+      "type": "hard",
+      "logic": "all_of",
+      "needs": [
+        "diagnoses"
+      ],
+      "threshold": null,
+      "context_conditions": [],
+      "confidence": 0.95
+    },
+    {
+      "id": "footwear_qualifying_foot_condition",
+      "text": "At least one qualifying foot condition. Peripheral neuropathy alone does NOT qualify — it must be accompanied by callus formation.",
+      "quote": "at least one of the following conditions: previous amputation of the foot or part of the foot; a history of previous foot ulceration; a history of pre-ulcerative calluses; peripheral neuropathy with evidence of callus formation; foot deformity; or poor circulation",
+      "clause_ref": "LCD L33369 · qualifying conditions",
+      "type": "hard",
+      "logic": "any_of",
+      "needs": [
+        "foot_conditions"
+      ],
+      "threshold": null,
+      "context_conditions": [
+        "amputation",
+        "ulcer_history",
+        "pre_ulcerative_callus",
+        "neuropathy_with_callus",
+        "foot_deformity",
+        "poor_circulation"
+      ],
+      "confidence": 0.95
+    }
+  ]
+}

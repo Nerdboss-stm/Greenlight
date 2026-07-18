@@ -24,3 +24,6 @@ ruvector.db
 # claude-flow / RuFlo tooling
 .claude/
 .mcp.json
+
+# Tesseract downloaded language data (OCR)
+*.traineddata

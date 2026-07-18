@@ -1,0 +1,227 @@
+/* ============================================================
+   GreenLight — Policy view: decomposed criterion cards
+   ============================================================ */
+
+.gl-crits {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gl-crit {
+  background: var(--card);
+  border: var(--hair);
+  border-left: 2px solid var(--hairline);
+  padding: 16px 18px;
+}
+.gl-crit[data-type="hard"] {
+  border-left-color: var(--ink);
+}
+.gl-crit[data-type="soft"] {
+  border-left-color: var(--ink-soft);
+  border-left-style: dashed;
+}
+
+.gl-crit__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 11px;
+}
+.gl-crit__type {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.gl-crit__sq {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--ink);
+}
+.gl-crit__type--hard .gl-crit__sq {
+  background: var(--ink);
+}
+.gl-crit__type--soft .gl-crit__sq {
+  background: transparent;
+}
+.gl-crit__logic {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: var(--hair);
+  padding: 2px 7px;
+}
+.gl-crit__ref {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+.gl-crit__spacer {
+  flex: 1;
+}
+.gl-crit__flag {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  padding: 2px 7px;
+}
+
+.gl-crit__text {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* the verbatim policy quote, set as an editorial citation */
+.gl-crit__quote {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+  border-left: 2px solid var(--hairline);
+  padding-left: 14px;
+  margin: 12px 0 0;
+}
+
+.gl-crit__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+}
+.gl-crit__threshold {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 500;
+}
+.gl-crit__needs {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+/* measurement context / any_of qualifiers — the star of the show */
+.gl-ctx {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+  padding-top: 12px;
+  border-top: var(--hair);
+}
+.gl-ctx__label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-right: 2px;
+}
+
+/* ---------- New policy compose panel ---------- */
+.gl-compose {
+  max-width: var(--read-max);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.gl-compose__title {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: clamp(26px, 3.4vw, 34px);
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0;
+}
+.gl-compose__body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.gl-input--text {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 9px 11px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--ink);
+}
+.gl-textarea {
+  width: 100%;
+  min-height: 260px;
+  resize: vertical;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  padding: 14px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: var(--card);
+  color: var(--ink);
+}
+.gl-textarea::placeholder {
+  color: var(--ink-soft);
+}
+.gl-compose__actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.gl-compose__field-label {
+  display: block;
+  margin-bottom: 7px;
+}
+
+/* ---------- reading-column view toggle ---------- */
+.gl-toggle {
+  display: inline-flex;
+  border: 1px solid var(--ink);
+  margin-bottom: 26px;
+}
+.gl-toggle button {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--ink);
+  border: none;
+  border-right: 1px solid var(--ink);
+  cursor: pointer;
+}
+.gl-toggle button:last-child {
+  border-right: none;
+}
+.gl-toggle button[data-active="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.gl-toggle button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
