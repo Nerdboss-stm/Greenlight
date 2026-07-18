@@ -6,10 +6,11 @@ import "./styles/screen.css";
 import "./styles/intake.css";
 import "./styles/policy.css";
 import "./styles/live.css";
-import { LiveScreen } from "./screens/LiveScreen";
+import "./styles/eval.css";
+import { App } from "./App";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <LiveScreen />
+    <App />
   </StrictMode>,
 );

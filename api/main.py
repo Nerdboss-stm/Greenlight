@@ -22,6 +22,7 @@ from evals.run_evals import run_evals
 
 from .models import (
     AuthorRequest,
+    AuthorResponse,
     BasketRequest,
     BasketResponse,
     CaseRequest,
@@ -29,8 +30,8 @@ from .models import (
     Determination,
     EvalResult,
     EvalRunRequest,
-    GoldCase,
     Policy,
+    RejectedCandidate,
     RetrievePolicyRequest,
     SummarizeRequest,
     PatientContext,
@@ -167,12 +168,17 @@ async def run_case(body: CaseRequest):
     return det
 
 
-@app.post("/policies/{procedure}/author", response_model=list[GoldCase])
-def author_gold(procedure: str, body: AuthorRequest) -> list[GoldCase]:
-    """Author candidate gold cases (status pending_human); stores accepted ones append-only."""
+@app.post("/policies/{procedure}/author", response_model=AuthorResponse)
+def author_gold(procedure: str, body: AuthorRequest) -> AuthorResponse:
+    """Author candidate gold cases. Accepted ones (status pending_human) are stored
+    append-only; validator-rejected ones are returned too so the UI can show them
+    struck through with the reason they died."""
     try:
-        accepted, _rejected = author.author_and_store(procedure, body.targets)
-        return accepted
+        accepted, rejected = author.author_and_store(procedure, body.targets)
+        return AuthorResponse(
+            accepted=accepted,
+            rejected=[RejectedCandidate(**r) for r in rejected],
+        )
     except Exception as exc:
         raise ApiException("author_error", f"authoring failed: {exc}", 502)
 

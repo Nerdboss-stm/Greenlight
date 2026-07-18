@@ -9,6 +9,7 @@
 import { useCallback, useRef, useState } from "react";
 import type {
   AuthorRequest,
+  AuthorResponse,
   BasketRequest,
   BasketResponse,
   CaseRequest,
@@ -16,7 +17,6 @@ import type {
   Determination,
   EvalResult,
   EvalRunRequest,
-  GoldCase,
   PatientContext,
   Policy,
   RetrievePolicyRequest,
@@ -99,8 +99,8 @@ export function runCase(req: CaseRequest): Promise<Determination> {
   return post<Determination>("/case", { ...req, stream: false });
 }
 
-export function authorGold(procedure: string, targets: number): Promise<GoldCase[]> {
-  return post<GoldCase[]>(
+export function authorGold(procedure: string, targets: number): Promise<AuthorResponse> {
+  return post<AuthorResponse>(
     `/policies/${encodeURIComponent(procedure)}/author`,
     { targets } satisfies AuthorRequest,
   );

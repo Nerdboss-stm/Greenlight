@@ -6,6 +6,7 @@ export { DecisionBanner } from "./DecisionBanner";
 export { EvidenceRow } from "./EvidenceRow";
 export { TraceTheater } from "./TraceTheater";
 export { TrustBadges } from "./TrustBadges";
+export { PlaneNav } from "./PlaneNav";
 export { FileDrop } from "./FileDrop";
 export { PatientContextView } from "./PatientContextView";
 export { PolicyView } from "./PolicyView";

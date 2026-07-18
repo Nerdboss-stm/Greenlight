@@ -211,6 +211,17 @@ class PerPolicyStat(BaseModel):
     cases: int
 
 
+class ModeStats(BaseModel):
+    """One mode's metrics, so the panel can show single vs adversarial side by side."""
+    case_accuracy: float
+    precision: float
+    recall: float
+    taxonomy: Taxonomy
+    calibration: float
+    cost_per_case: float
+    latency_per_case: float
+
+
 class EvalResult(BaseModel):
     mode: str
     case_accuracy: float
@@ -222,6 +233,10 @@ class EvalResult(BaseModel):
     cost_per_case: float
     latency_per_case: float
     per_policy: list[PerPolicyStat]
+    # Both modes' metrics (the eval runs both regardless of `mode`) for the
+    # single-vs-adversarial comparison. Optional for backward compatibility.
+    single: Optional[ModeStats] = None
+    adversarial: Optional[ModeStats] = None
 
 
 # --- Request bodies ----------------------------------------------------------
@@ -262,6 +277,20 @@ class EvalRunRequest(BaseModel):
 
 
 # --- Response envelopes ------------------------------------------------------
+
+
+class RejectedCandidate(BaseModel):
+    """A candidate the deterministic validator killed — shown struck-through with its reason."""
+    branch: str
+    intended: Optional[str] = None
+    engine_verdict: Optional[str] = None
+    reason: str
+    trap: Optional[str] = None
+
+
+class AuthorResponse(BaseModel):
+    accepted: list[GoldCase]
+    rejected: list[RejectedCandidate]
 
 
 class BasketResponse(BaseModel):

@@ -193,6 +193,16 @@ export interface PerPolicyStat {
   cases: number;
 }
 
+export interface ModeStats {
+  case_accuracy: number;
+  precision: number;
+  recall: number;
+  taxonomy: Taxonomy;
+  calibration: number;
+  cost_per_case: number;
+  latency_per_case: number;
+}
+
 export interface EvalResult {
   mode: string;
   case_accuracy: number;
@@ -204,6 +214,8 @@ export interface EvalResult {
   cost_per_case: number;
   latency_per_case: number;
   per_policy: PerPolicyStat[];
+  single?: ModeStats;
+  adversarial?: ModeStats;
 }
 
 // --- Request bodies ----------------------------------------------------------
@@ -243,6 +255,19 @@ export interface EvalRunRequest {
 }
 
 // --- Response envelopes ------------------------------------------------------
+
+export interface RejectedCandidate {
+  branch: string;
+  intended?: string;
+  engine_verdict?: string;
+  reason: string;
+  trap?: string;
+}
+
+export interface AuthorResponse {
+  accepted: GoldCase[];
+  rejected: RejectedCandidate[];
+}
 
 export interface BasketResponse {
   basket_size: number;

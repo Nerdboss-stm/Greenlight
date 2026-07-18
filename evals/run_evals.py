@@ -19,6 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from api.models import (
     CriterionResult,
     EvalResult,
+    ModeStats,
     PatientEvidence,
     PerCriterionStats,
     PerPolicyStat,
@@ -146,6 +147,17 @@ def run_evals(procedure: str, mode: str, *, use_agent: bool | None = None) -> Ev
     primary = adversarial if _MODE_TO_CASE.get(mode) == "adversarial" else single
     delta = round(adversarial["case_accuracy"] - single["case_accuracy"], 4)
 
+    def _mode_stats(d: dict[str, Any]) -> ModeStats:
+        return ModeStats(
+            case_accuracy=d["case_accuracy"],
+            precision=d["precision"],
+            recall=d["recall"],
+            taxonomy=Taxonomy(**d["taxonomy"]),
+            calibration=d["calibration"],
+            cost_per_case=d["cost_per_case"],
+            latency_per_case=d["latency_per_case"],
+        )
+
     return EvalResult(
         mode=mode,
         case_accuracy=primary["case_accuracy"],
@@ -157,6 +169,8 @@ def run_evals(procedure: str, mode: str, *, use_agent: bool | None = None) -> Ev
         cost_per_case=primary["cost_per_case"],
         latency_per_case=primary["latency_per_case"],
         per_policy=[PerPolicyStat(procedure=procedure, case_accuracy=primary["case_accuracy"], cases=len(cases))],
+        single=_mode_stats(single),
+        adversarial=_mode_stats(adversarial),
     )
 
 

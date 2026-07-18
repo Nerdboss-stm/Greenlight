@@ -150,6 +150,16 @@ The terminal event of a stream is `type: "done"`; its `payload` is the full
 | `cost_per_case` | `number` |
 | `latency_per_case` | `number` |
 | `per_policy` | `PerPolicyStat[]` = `{ procedure: string, case_accuracy: number, cases: int }[]` |
+| `single?` | `ModeStats` — single-mode metrics (the eval runs both modes regardless of `mode`) |
+| `adversarial?` | `ModeStats` — adversarial-mode metrics, for the single-vs-adversarial comparison |
+
+`ModeStats` = `{ case_accuracy, precision, recall, taxonomy, calibration, cost_per_case, latency_per_case }`.
+
+### AuthorResponse
+
+`{ accepted: GoldCase[], rejected: RejectedCandidate[] }` — accepted cases are stored append-only with `status: "pending_human"`; rejected candidates were killed by the deterministic branch validator and are returned so the UI can show them struck through.
+
+`RejectedCandidate` = `{ branch: string, intended?: string, engine_verdict?: string, reason: string, trap?: string }`.
 
 ---
 
@@ -177,7 +187,7 @@ Every non-2xx response uses exactly one shape:
 | `POST` | `/policies/decompose` | `{ text, procedure? }` | `Policy` (decompose free-text policy: one LLM call → validate → pin) |
 | `POST` | `/case` | `{ patient_file, procedure, mode? }` | `Determination` (always includes `trace[]`) |
 | `POST` | `/case` (stream) | `{ patient_file, procedure, mode?, stream: true }` | **SSE** — one `TraceEvent` per `data:` frame; final `done` event carries the full `Determination` |
-| `POST` | `/policies/{procedure}/author` | `{ targets }` | `GoldCase[]` (`status: pending_human`) |
+| `POST` | `/policies/{procedure}/author` | `{ targets }` | `AuthorResponse` = `{ accepted: GoldCase[], rejected: RejectedCandidate[] }` |
 | `POST` | `/basket` | `{ procedure, decisions }` | `{ basket_size }` |
 | `POST` | `/evals/run` | `{ procedure, mode }` | `EvalResult` |
 

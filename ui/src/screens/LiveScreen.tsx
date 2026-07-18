@@ -9,6 +9,7 @@ import {
   EvidenceRow,
   FileDrop,
   PatientContextView,
+  PlaneNav,
   PolicyView,
   Tag,
   TraceTheater,
@@ -258,6 +259,8 @@ export function LiveScreen() {
           </div>
           <div className="gl-mark__sub">Prior Authorization</div>
         </div>
+
+        <PlaneNav active="live" />
 
         {loaded ? (
           <div className="gl-pcard">
