@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { ApiClientError, getPolicies, retrievePolicy, streamCase, summarize } from "../api";
+import type { Variants } from "motion/react";
+import { ApiClientError, getPolicies, retrievePolicy, runCase, streamCase, summarize } from "../api";
 import {
   Button,
   DataValue,
@@ -77,6 +78,7 @@ export function LiveScreen() {
   const [performed, setPerformed] = useState(false);
   const [activeCrit, setActiveCrit] = useState<string | null>(null);
   const [showWork, setShowWork] = useState(false);
+  const [cfRunning, setCfRunning] = useState(false);
 
   const resolved = !!determination && performed;
 
@@ -103,6 +105,7 @@ export function LiveScreen() {
     setPerformed(false);
     setActiveCrit(null);
     setShowWork(false);
+    setCfRunning(false);
   };
 
   const handleFile = async (file: File) => {
@@ -205,6 +208,29 @@ export function LiveScreen() {
       setError(toMessage(e));
     } finally {
       setRunning(false);
+    }
+  };
+
+  // Counterfactual: re-adjudicate an edited PatientContext WITHOUT re-performing
+  // the theater. The determination updates in place — the changed criterion's
+  // square cross-fades and the banner re-stamps. One confident moment.
+  const rerunCounterfactual = async (ctx: PatientContext) => {
+    if (!policy || cfRunning) return;
+    setCfRunning(true);
+    setError(null);
+    try {
+      const det = await runCase({
+        patient_file: ctx as unknown as Record<string, unknown>,
+        procedure: policy.procedure,
+        mode: "adversarial",
+      });
+      setDetermination(det);
+      setEvents(det.trace.slice().sort((a, b) => a.seq - b.seq));
+      setRunId((n) => n + 1); // re-stamp the banner + badges
+    } catch (e) {
+      setError(toMessage(e));
+    } finally {
+      setCfRunning(false);
     }
   };
 
@@ -372,6 +398,7 @@ export function LiveScreen() {
             det={determination}
             events={events}
             policy={policy}
+            baseCtx={loaded?.ctx ?? null}
             critMap={critMap}
             arbiterExpr={arbiterExpr}
             runId={runId}
@@ -379,6 +406,8 @@ export function LiveScreen() {
             onActiveCrit={setActiveCrit}
             showWork={showWork}
             onShowWork={setShowWork}
+            onRerun={rerunCounterfactual}
+            cfRunning={cfRunning}
           />
         ) : running || events.length > 0 ? (
           <div className="gl-read__inner">
@@ -441,6 +470,7 @@ interface DeterminationViewProps {
   det: Determination;
   events: TraceEvent[];
   policy: Policy | null;
+  baseCtx: PatientContext | null;
   critMap: Map<string, Criterion>;
   arbiterExpr: string;
   runId: number;
@@ -448,12 +478,24 @@ interface DeterminationViewProps {
   onActiveCrit: (id: string | null) => void;
   showWork: boolean;
   onShowWork: (v: boolean) => void;
+  onRerun: (ctx: PatientContext) => void;
+  cfRunning: boolean;
 }
+
+// Staged reveal on theater completion — the theater WAS the reveal, so this is
+// a quiet settle, not a second show: tags settle first, then the stamp lands.
+const listV: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } };
+const itemV: Variants = {
+  hidden: { opacity: 0, y: 6 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const } },
+};
+const BANNER_DELAY = 0.4; // let the criteria settle first
 
 function DeterminationView({
   det,
   events,
   policy,
+  baseCtx,
   critMap,
   arbiterExpr,
   runId,
@@ -461,6 +503,8 @@ function DeterminationView({
   onActiveCrit,
   showWork,
   onShowWork,
+  onRerun,
+  cfRunning,
 }: DeterminationViewProps) {
   const reduce = useReducedMotion();
   const stampVerdict = VERDICT_LOWER[det.verdict] ?? "insufficient";
@@ -488,40 +532,43 @@ function DeterminationView({
   );
 
   return (
-    <motion.div
-      className="gl-read__inner"
-      initial={reduce ? false : { opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={reduce ? { duration: 0 } : { duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-    >
+    // No entrance fade on the container — the theater was the reveal. We only
+    // stage the settle below (tags → stamp) so we don't double-animate.
+    <div className="gl-read__inner">
       <DecisionBanner
         verdict={stampVerdict}
         seal={seal}
         rationale={<span className="gl-mono">{arbiterExpr}</span>}
         stampKey={runId}
-        delay={0.05}
+        delay={BANNER_DELAY}
       />
 
       <TrustBadges events={events} determination={det} replayKey={runId} />
 
       <div className="gl-block">
         <SectionRule label="Criteria" index="§1" meta={`${det.criteria.length}`} />
-        <div className="gl-criteria">
+        <motion.div
+          className="gl-criteria"
+          variants={reduce ? undefined : listV}
+          initial={reduce ? false : "hidden"}
+          animate={reduce ? false : "show"}
+        >
           {det.criteria.map((cr) => {
             const c = critMap.get(cr.id);
             return (
-              <Tag
-                key={cr.id}
-                label={c?.text ?? cr.id}
-                status={cr.verdict as CriterionStatus}
-                clauseRef={cr.policy_clause}
-                kind={c?.type}
-                active={activeCrit === cr.id}
-                onClick={() => onActiveCrit(activeCrit === cr.id ? null : cr.id)}
-              />
+              <motion.div key={cr.id} variants={reduce ? undefined : itemV}>
+                <Tag
+                  label={c?.text ?? cr.id}
+                  status={cr.verdict as CriterionStatus}
+                  clauseRef={cr.policy_clause}
+                  kind={c?.type}
+                  active={activeCrit === cr.id}
+                  onClick={() => onActiveCrit(activeCrit === cr.id ? null : cr.id)}
+                />
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
 
       {active && (
@@ -549,6 +596,8 @@ function DeterminationView({
 
       <ActionsPanel det={det} />
 
+      {baseCtx && <Counterfactual base={baseCtx} onRerun={onRerun} running={cfRunning} />}
+
       <div className="gl-block">
         <button className="gl-showwork" onClick={() => onShowWork(!showWork)}>
           <span className="gl-showwork__mark">{showWork ? "−" : "+"}</span>
@@ -568,9 +617,120 @@ function DeterminationView({
           See how it scores on the eval harness →
         </a>
       </div>
-    </motion.div>
+    </div>
   );
 }
+
+// The counterfactual box: edit one field, re-adjudicate. Kept deliberately
+// small — the encounter class (the oxygen case's hinge) and one lab override.
+function Counterfactual({
+  base,
+  onRerun,
+  running,
+}: {
+  base: PatientContext;
+  onRerun: (ctx: PatientContext) => void;
+  running: boolean;
+}) {
+  const hasEnc = base.encounters.length > 0;
+  const [encClass, setEncClass] = useState(hasEnc ? base.encounters[0].class : "");
+  const encOptions =
+    hasEnc && !ENC_CLASSES.some((o) => o.code === base.encounters[0].class)
+      ? [{ code: base.encounters[0].class, label: "current" }, ...ENC_CLASSES]
+      : ENC_CLASSES;
+  const labs = base.labs;
+  const [labIdx, setLabIdx] = useState(() => {
+    const o2 = labs.findIndex((l) => /oxygen|spo2|sat/i.test(l.display));
+    return o2 >= 0 ? o2 : 0;
+  });
+  const [labVal, setLabVal] = useState(labs.length ? String(labs[labIdx]?.value ?? "") : "");
+
+  const onPickLab = (i: number) => {
+    setLabIdx(i);
+    setLabVal(String(labs[i]?.value ?? ""));
+  };
+
+  const dirty =
+    (hasEnc && encClass !== base.encounters[0].class) ||
+    (labs.length > 0 && labVal !== String(labs[labIdx]?.value ?? ""));
+
+  const rerun = () => {
+    const ctx: PatientContext = JSON.parse(JSON.stringify(base));
+    if (hasEnc) ctx.encounters.forEach((e) => (e.class = encClass));
+    if (labs.length && ctx.labs[labIdx]) {
+      const orig = base.labs[labIdx].value;
+      ctx.labs[labIdx].value = typeof orig === "number" ? Number(labVal) : labVal;
+    }
+    onRerun(ctx);
+  };
+
+  if (!hasEnc && labs.length === 0) return null;
+
+  return (
+    <div className="gl-block">
+      <SectionRule label="Counterfactual" index="§3" meta="what-if" />
+      <div className="gl-cfbox">
+        <div className="gl-cfbox__fields">
+          {hasEnc && (
+            <label className="gl-cffield">
+              <span className="gl-eyebrow">Encounter class</span>
+              <div className="gl-select-wrap">
+                <select className="gl-select" value={encClass} onChange={(e) => setEncClass(e.target.value)} disabled={running}>
+                  {encOptions.map((o) => (
+                    <option key={o.code} value={o.code}>
+                      {o.code} — {o.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </label>
+          )}
+          {labs.length > 0 && (
+            <label className="gl-cffield">
+              <span className="gl-eyebrow">Lab override</span>
+              <div className="gl-cffield__lab">
+                <div className="gl-select-wrap">
+                  <select className="gl-select" value={labIdx} onChange={(e) => onPickLab(Number(e.target.value))} disabled={running}>
+                    {labs.map((l, i) => (
+                      <option key={i} value={i}>
+                        {l.display}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <input
+                  className="gl-input"
+                  value={labVal}
+                  onChange={(e) => setLabVal(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && dirty && !running && rerun()}
+                  disabled={running}
+                />
+                <span className="gl-cffield__unit">{labs[labIdx]?.unit}</span>
+              </div>
+            </label>
+          )}
+        </div>
+        <div className="gl-cfbox__foot">
+          <Button variant="go" dot onClick={rerun} disabled={!dirty || running}>
+            {running ? "Re-running…" : "Re-run"}
+          </Button>
+          <span className="gl-cfbox__hint">
+            Change a field and re-adjudicate. The criterion recolors and the decision re-stamps — nothing else moves.
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const ENC_CLASSES: { code: string; label: string }[] = [
+  { code: "AMB", label: "ambulatory (outpatient, at rest)" },
+  { code: "IMP", label: "inpatient admission" },
+  { code: "EMER", label: "emergency" },
+  { code: "ACUTE", label: "acute" },
+  { code: "OBSENC", label: "observation" },
+  { code: "SS", label: "short stay" },
+];
 
 function ActionsPanel({ det }: { det: Determination }) {
   const a = det.actions;

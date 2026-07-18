@@ -512,6 +512,58 @@
   margin-top: 12px;
 }
 
+/* ---------- Counterfactual box ---------- */
+.gl-cfbox {
+  border: var(--hair);
+  border-left: 2px solid var(--ink);
+  background: var(--card);
+  padding: 16px 18px;
+}
+.gl-cfbox__fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.gl-cffield {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.gl-cffield .gl-select {
+  min-width: 210px;
+}
+.gl-cffield__lab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.gl-cffield__lab .gl-select {
+  min-width: 220px;
+}
+.gl-cffield__lab .gl-input {
+  width: 96px;
+}
+.gl-cffield__unit {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+.gl-cfbox__foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: var(--hair);
+}
+.gl-cfbox__hint {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 380px;
+}
+
 /* ---------- Trust line (footer → Page 2) ---------- */
 .gl-trustline {
   border-top: var(--hair);
