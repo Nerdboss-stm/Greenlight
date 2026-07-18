@@ -7,12 +7,17 @@ shape is enforced from day one. CORS is open to the Vite dev origin.
 
 from __future__ import annotations
 
+import asyncio
+import json
+
 from fastapi import FastAPI, Request
+from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from sse_starlette.sse import EventSourceResponse
 
 from adapters import doc_adapter, fhir_adapter
-from agent import retrieve
+from agent import pipeline, retrieve
 
 from .models import (
     AuthorRequest,
@@ -128,6 +133,19 @@ def decompose_policy(body: DecomposePolicyRequest) -> Policy:
         raise ApiException("decompose_error", f"could not decompose policy: {exc}", 502)
 
 
+async def _stream_determination(det: Determination):
+    """SSE: each TraceEvent as a frame; the final `done` frame carries the full Determination."""
+    for ev in det.trace[:-1]:
+        yield {"event": ev.type, "data": ev.model_dump_json(by_alias=True)}
+        await asyncio.sleep(0.02)
+    done = det.trace[-1]
+    final = {
+        "seq": done.seq, "ts_ms": done.ts_ms, "phase": done.phase, "type": "done",
+        "label": done.label, "payload": json.loads(det.model_dump_json(by_alias=True)),
+    }
+    yield {"event": "done", "data": json.dumps(final)}
+
+
 @app.post("/case")
 async def run_case(body: CaseRequest):
     """Adjudicate a case. Returns a Determination (always with trace[]).
@@ -136,7 +154,16 @@ async def run_case(body: CaseRequest):
     TraceEvent as it happens; the final ``done`` event carries the full
     Determination in its payload.
     """
-    raise _todo("POST /case")
+    try:
+        det = await run_in_threadpool(
+            pipeline.run_case, body.patient_file, body.procedure, body.mode or "baseline"
+        )
+    except Exception as exc:
+        raise ApiException("case_error", f"could not adjudicate case: {exc}", 422)
+
+    if body.stream:
+        return EventSourceResponse(_stream_determination(det))
+    return det
 
 
 @app.post("/policies/{procedure}/author", response_model=list[GoldCase])

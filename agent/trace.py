@@ -13,10 +13,19 @@ from typing import Any, Optional
 from api.models import CriterionResult, TraceEvent, TracePhase, TraceType
 
 
+# claude-sonnet-4-5 pricing ($ per 1M tokens)
+_IN_PER_M = 3.0
+_OUT_PER_M = 15.0
+
+
 class Tracer:
     def __init__(self) -> None:
         self.events: list[TraceEvent] = []
         self._seq = 0
+        self.cost_usd = 0.0
+
+    def add_cost(self, input_tokens: int, output_tokens: int) -> None:
+        self.cost_usd += (input_tokens * _IN_PER_M + output_tokens * _OUT_PER_M) / 1_000_000
 
     def emit(self, phase: TracePhase, type: TraceType, label: str,
              payload: Optional[dict[str, Any]] = None) -> TraceEvent:

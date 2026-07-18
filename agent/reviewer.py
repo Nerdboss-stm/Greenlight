@@ -268,6 +268,8 @@ def _agent_reason(crit: Criterion, tracer: Tracer, *, max_turns: int = 6) -> tup
             tools=_TOOL_SCHEMAS,
             messages=messages,
         )
+        if getattr(resp, "usage", None):
+            tracer.add_cost(resp.usage.input_tokens, resp.usage.output_tokens)
         text = "".join(b.text for b in resp.content if b.type == "text")
         if text:
             final = text
