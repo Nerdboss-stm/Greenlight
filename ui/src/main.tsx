@@ -5,10 +5,11 @@ import "./styles/components.css";
 import "./styles/screen.css";
 import "./styles/intake.css";
 import "./styles/policy.css";
-import { IntakeScreen } from "./screens/IntakeScreen";
+import "./styles/live.css";
+import { LiveScreen } from "./screens/LiveScreen";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <IntakeScreen />
+    <LiveScreen />
   </StrictMode>,
 );
