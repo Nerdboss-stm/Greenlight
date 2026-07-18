@@ -1,0 +1,104 @@
+/* ============================================================
+   GreenLight — Design Tokens · "Clinical Instrument"
+   Precision lab report crossed with an editorial legal brief.
+   ============================================================ */
+
+:root {
+  /* --- Clinical paper palette --- */
+  --paper: #f5f1e8;
+  --card: #fcfaf3;
+  --ink: #161e2d;
+  --ink-soft: #48546b;
+  --hairline: #ded6c4;
+
+  /* --- One decisive accent (the "green light") + verdict system --- */
+  --green: #2e6b45; /* brand accent AND verdict:approve */
+  --red: #9c3230; /*                       verdict:deny        */
+  --amber: #b0761b; /*                       verdict:insufficient */
+
+  /* Tints for facing evidence panels / ledgers (never gradients) */
+  --green-wash: #eaf0ea;
+  --red-wash: #f4eae8;
+  --amber-wash: #f4eee2;
+
+  /* --- Type --- */
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", "SF Mono", ui-monospace, monospace;
+
+  /* --- Metrics --- */
+  --rail: 316px;
+  --read-max: 800px;
+  --hair: 1px solid var(--hairline);
+  --hair-ink: 1px solid var(--ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.5;
+  font-feature-settings: "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Barely-there paper grain (~3.5%) over everything, for warmth. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* --- Type primitives --- */
+.gl-serif {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+}
+.gl-mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.gl-tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Printed-form eyebrow: small, uppercase, letterspaced mono */
+.gl-eyebrow {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+::selection {
+  background: var(--green);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}

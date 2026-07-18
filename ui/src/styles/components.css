@@ -1,0 +1,563 @@
+/* ============================================================
+   GreenLight — Base component treatments
+   Hairline rules, squared borders, status squares, no shadows.
+   ============================================================ */
+
+/* ---------- SectionRule ---------- */
+.gl-section {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+}
+.gl-section__index {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 0.1em;
+}
+.gl-section__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.gl-section__rule {
+  flex: 1;
+  height: 0;
+  border-top: var(--hair);
+  transform: translateY(-3px);
+}
+.gl-section__meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* ---------- DataValue ---------- */
+.gl-value {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.gl-value--num {
+  font-weight: 500;
+}
+.gl-value__unit {
+  color: var(--ink-soft);
+  margin-left: 3px;
+  font-weight: 400;
+}
+.gl-value--lg {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.gl-value--lg .gl-value__unit {
+  font-size: 16px;
+}
+.gl-value--muted {
+  color: var(--ink-soft);
+}
+.gl-value--met {
+  color: var(--green);
+}
+.gl-value--not_met {
+  color: var(--red);
+}
+.gl-value--unknown {
+  color: var(--amber);
+}
+
+/* Right-aligned data table (tabular figures) */
+.gl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.gl-table th {
+  text-align: left;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 0 0 8px;
+  border-bottom: var(--hair);
+}
+.gl-table th.gl-num,
+.gl-table td.gl-num {
+  text-align: right;
+}
+.gl-table td {
+  padding: 9px 0;
+  border-bottom: var(--hair);
+  color: var(--ink);
+  vertical-align: baseline;
+}
+.gl-table td:first-child {
+  font-family: var(--sans);
+  color: var(--ink-soft);
+  padding-right: 20px;
+}
+.gl-table .gl-num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---------- Status square (shared) ---------- */
+.gl-square {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(22, 30, 45, 0.28);
+}
+.gl-square--met {
+  background: var(--green);
+}
+.gl-square--not_met {
+  background: var(--red);
+}
+.gl-square--unknown {
+  background: var(--amber);
+}
+
+/* ---------- Tag (criterion) ---------- */
+.gl-tag {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--card);
+  border: var(--hair);
+  border-left: 2px solid var(--hairline);
+  border-radius: 0;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  font: inherit;
+  color: inherit;
+}
+.gl-tag:hover {
+  border-color: var(--ink-soft);
+}
+.gl-tag[data-status="met"] {
+  border-left-color: var(--green);
+}
+.gl-tag[data-status="not_met"] {
+  border-left-color: var(--red);
+}
+.gl-tag[data-status="unknown"] {
+  border-left-color: var(--amber);
+}
+.gl-tag[data-active="true"] {
+  border-color: var(--ink);
+  background: var(--paper);
+}
+.gl-tag__body {
+  flex: 1;
+  min-width: 0;
+}
+.gl-tag__label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.gl-tag__ref {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+}
+.gl-tag__kind {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: var(--hair);
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+/* ---------- Button ---------- */
+.gl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.14s ease, color 0.14s ease, opacity 0.14s ease;
+}
+.gl-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.gl-btn--primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.gl-btn--primary:hover {
+  opacity: 0.86;
+  background: var(--ink);
+}
+.gl-btn--go {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--paper);
+}
+.gl-btn--go:hover {
+  background: #255737;
+  border-color: #255737;
+  color: var(--paper);
+}
+.gl-btn__dot {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+}
+.gl-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ---------- DecisionBanner (stamp) ---------- */
+.gl-stamp {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 22px 26px;
+  background: var(--card);
+  border: 1px solid var(--ink);
+}
+/* inner rule = double-rule frame */
+.gl-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--ink);
+  pointer-events: none;
+}
+.gl-stamp__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.gl-stamp__word {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 0.96;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.gl-stamp__word--approve {
+  color: var(--green);
+}
+.gl-stamp__word--deny {
+  color: var(--red);
+}
+.gl-stamp__word--insufficient {
+  color: var(--amber);
+}
+.gl-stamp__seal {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-align: right;
+  line-height: 1.5;
+}
+.gl-stamp__rule {
+  border-top: 1px solid var(--ink);
+  margin: 14px 0 12px;
+}
+.gl-stamp__rationale {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
+  line-height: 1.55;
+}
+.gl-stamp__rationale b {
+  font-weight: 600;
+}
+
+/* ---------- EvidenceRow (the hero) ---------- */
+.gl-evidence {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  align-items: stretch;
+  background: var(--card);
+  border: var(--hair);
+}
+.gl-evidence__col {
+  padding: 20px 22px;
+  min-width: 0;
+}
+.gl-evidence__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.gl-evidence__ref {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink);
+  border: var(--hair);
+  padding: 2px 7px;
+  letter-spacing: 0.03em;
+}
+.gl-evidence__clause {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.gl-evidence__source {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  letter-spacing: 0.02em;
+}
+.gl-evidence__patient .gl-evidence__eyebrow {
+  justify-content: flex-end;
+}
+.gl-evidence__patient {
+  text-align: right;
+}
+.gl-evidence__field {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+/* the connecting rule with a center node */
+.gl-evidence__join {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.gl-evidence__join::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--hairline);
+}
+.gl-evidence__node {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 9px;
+  height: 9px;
+  background: var(--green);
+  border: 1px solid var(--card);
+  outline: 1px solid var(--green);
+}
+
+/* ---------- TraceTheater (procedure record) ---------- */
+.gl-trace {
+  background: var(--card);
+  border: var(--hair);
+}
+.gl-trace__masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12px 18px;
+  border-bottom: var(--hair);
+}
+.gl-trace__title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.gl-trace__live {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.gl-trace__pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.gl-trace__log {
+  padding: 8px 0;
+  height: 356px;
+  overflow-y: auto;
+}
+.gl-trace__log::-webkit-scrollbar {
+  width: 8px;
+}
+.gl-trace__log::-webkit-scrollbar-thumb {
+  background: var(--hairline);
+}
+
+/* phase rule */
+.gl-ph {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 14px 18px 8px;
+}
+.gl-ph__n {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 0.1em;
+}
+.gl-ph__label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.gl-ph__rule {
+  flex: 1;
+  border-top: var(--hair);
+  transform: translateY(-3px);
+}
+
+/* ledger line */
+.gl-led {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 4px 18px 4px 30px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.gl-led__mark {
+  color: var(--ink-soft);
+}
+.gl-led__call {
+  color: var(--ink-soft);
+}
+.gl-led__arrow {
+  color: var(--ink-soft);
+}
+.gl-led__val {
+  color: var(--ink);
+  font-weight: 500;
+}
+.gl-led__val--hit {
+  color: var(--green);
+}
+
+/* argument turns — facing entries */
+.gl-arg {
+  display: flex;
+  padding: 6px 18px;
+}
+.gl-arg--advocate {
+  justify-content: flex-end;
+}
+.gl-arg__card {
+  max-width: 78%;
+  border: var(--hair);
+  padding: 9px 12px;
+  background: var(--paper);
+}
+.gl-arg--payer .gl-arg__card {
+  border-left: 2px solid var(--red);
+}
+.gl-arg--advocate .gl-arg__card {
+  border-left: 2px solid var(--green);
+  text-align: left;
+}
+.gl-arg__role {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+.gl-arg__text {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.gl-arg__chip {
+  display: inline-block;
+  margin-top: 7px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--ink);
+  border: var(--hair);
+  padding: 1px 6px;
+  letter-spacing: 0.03em;
+}
+
+/* arbiter arithmetic line */
+.gl-arb {
+  margin: 10px 18px 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.gl-arb__op {
+  color: var(--ink-soft);
+}
+.gl-arb__out {
+  font-weight: 600;
+}
+.gl-arb__out--approve {
+  color: var(--green);
+}
+.gl-arb__out--deny {
+  color: var(--red);
+}
+.gl-arb__out--insufficient {
+  color: var(--amber);
+}
